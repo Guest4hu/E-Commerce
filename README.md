@@ -1,4 +1,3 @@
-``` markdown
 # DesignPattern - REST API com Java e Spring Boot
 
 Este projeto foi desenvolvido como meu primeiro projeto utilizando **Spring Boot**, com foco no estudo e aplicação de **Design Patterns** em uma **API REST**.
@@ -183,5 +182,5 @@ Projeto desenvolvido para fins de estudo e prática com Java, Spring Boot, REST 
 
 ## Autor
 
-Desenvolvido por `<seu-nome>` como primeiro projeto com Spring Boot.
+Desenvolvido por `Guest4hu` como primeiro projeto com Spring Boot.
 ```
