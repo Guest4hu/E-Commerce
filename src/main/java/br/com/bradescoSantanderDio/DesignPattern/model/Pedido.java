@@ -7,14 +7,16 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tbl_pedidos")
 public class Pedido {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(nullable = false, unique = true)
+    private UUID id;
 
     private String cepDestino;
 
@@ -22,20 +24,31 @@ public class Pedido {
     private BigDecimal valorFrete;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private TipoFrete tipoFrete;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private TipoPagamento tipoPagamento;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private StatusPagamento statusPagamento;
 
+    @Column(nullable = false)
     private LocalDateTime dataCriacao;
+
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id") // Opcional, mas deixa claro o nome da coluna no banco
+    private Usuario usuario;
+
+
 
     // Construtor vazio (obrigatório para o JPA)
     public Pedido() {
         this.dataCriacao = LocalDateTime.now();
-        this.statusPagamento = statusPagamento.AGUARDANDO;
+        this.statusPagamento = StatusPagamento.AGUARDANDO;
     }
 
     public Pedido(String cepDestino, BigDecimal valorItens, TipoFrete tipoFrete, TipoPagamento tipoPagamento) {
@@ -46,11 +59,11 @@ public class Pedido {
         this.tipoPagamento = tipoPagamento;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

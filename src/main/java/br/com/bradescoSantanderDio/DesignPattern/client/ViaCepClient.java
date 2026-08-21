@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface ViaCepClient {
 
     @GetMapping("/{cep}/json/")
-    EnderecoDTO buscarEnderecoPorCep(@PathVariable("cep") String cep);
+    EnderecoDTO buscarEnderecoPorCep(@PathVariable String cep);
 }

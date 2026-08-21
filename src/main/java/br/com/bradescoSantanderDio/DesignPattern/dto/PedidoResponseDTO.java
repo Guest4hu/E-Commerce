@@ -3,10 +3,11 @@ package br.com.bradescoSantanderDio.DesignPattern.dto;
 import br.com.bradescoSantanderDio.DesignPattern.enums.StatusPagamento;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public class PedidoResponseDTO {
 
-    private Long idPedido;
+    private UUID idPedido;
     private BigDecimal valorFrete;
     private BigDecimal valorTotal;
     private StatusPagamento statusPagamento;
@@ -15,9 +16,8 @@ public class PedidoResponseDTO {
     public PedidoResponseDTO() {
     }
 
-
-    public PedidoResponseDTO(Long idPedido, BigDecimal valorFrete, BigDecimal valorTotal, StatusPagamento statusPagamento, String mensagemGeral) {
-        this.idPedido = idPedido;
+    public PedidoResponseDTO(UUID id, BigDecimal valorFrete, BigDecimal valorTotal, StatusPagamento statusPagamento, String mensagemGeral) {
+        this.idPedido = id;
         this.valorFrete = valorFrete;
         this.valorTotal = valorTotal;
         this.statusPagamento = statusPagamento;
@@ -25,11 +25,11 @@ public class PedidoResponseDTO {
     }
 
 
-    public Long getIdPedido() {
+    public UUID getIdPedido() {
         return idPedido;
     }
 
-    public void setIdPedido(Long idPedido) {
+    public void setIdPedido(UUID idPedido) {
         this.idPedido = idPedido;
     }
 
