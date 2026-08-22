@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+
 @Entity
 @Table(name = "tbl_usuarios") // Nome da tabela no banco
 public class Usuario implements UserDetails {
@@ -52,15 +53,15 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.senha; // Retorna a propriedade onde você guarda a senha
+        return this.senha;
     }
 
     @Override
     public String getUsername() {
-        return this.login; // Retorna a propriedade onde você guarda o e-mail/login
+        return this.login;
     }
 
-    // Daqui para baixo, são validações de conta. Vamos deixar todas retornando TRUE (Conta ativa e liberada)
+    // Daqui para baixo, são validações de conta. Vamos deixar todas retornando TRUE (Conta ativa e liberada), por conta do tipo de validação, cada uma tem sua especifica, precisa ser herdada do User Details.
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -79,12 +80,5 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    // =======================================================================
-    // GETTERS PADRÕES
-    // =======================================================================
-    public UUID getId() {
-        return id;
     }
 }

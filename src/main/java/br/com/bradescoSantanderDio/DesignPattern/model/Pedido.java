@@ -4,10 +4,12 @@ import br.com.bradescoSantanderDio.DesignPattern.enums.StatusPagamento;
 import br.com.bradescoSantanderDio.DesignPattern.enums.TipoFrete;
 import br.com.bradescoSantanderDio.DesignPattern.enums.TipoPagamento;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
+
 
 @Entity
 @Table(name = "tbl_pedidos")

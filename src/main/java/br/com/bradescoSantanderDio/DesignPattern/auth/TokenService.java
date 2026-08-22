@@ -5,44 +5,49 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.OffsetDateTime;
 
-
+@Slf4j
 @Service
 public class TokenService {
 
-    // Lê aquela senha que colocamos no application.properties
     @Value("${api.security.token.secret}")
     private String secret;
 
-    // Método 1: Cria um token novo quando o usuário acerta o login
+
+    @Value("${api.security.token.issuer}")
+    private String issuer;
+
+
     public String gerarToken(Usuario usuario) {
         try {
             // Define o algoritmo de criptografia e usa a nossa senha secreta
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
             return JWT.create()
-                    .withIssuer("api-ecommerce") // O nome do "emissor" do token (quem criou)
+                    .withIssuer(issuer) // O nome do "emissor" do token.
                     .withSubject(usuario.getUsername()) // Quem é o dono desse token (o login/email)
                     .withExpiresAt(gerarDataExpiracao()) // Quando o token vence
                     .sign(algorithm); // Assina criptografado
 
         } catch (JWTCreationException exception) {
+            log.error("Erro ao gerar token jwt", exception);
             throw new RuntimeException("Erro ao gerar token jwt", exception);
         }
     }
 
-    // Método 2: Descriptografa e valida o token que vem no Header do Postman
+
     public String validarToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
             return JWT.require(algorithm)
-                    .withIssuer("api-ecommerce") // Verifica se fomos nós que emitimos
+                    .withIssuer(issuer) // Verifica se fomos nós que emitimos
                     .build()
                     .verify(token) // Verifica a validade e a criptografia
                     .getSubject(); // Devolve o dono do token (o login/email)

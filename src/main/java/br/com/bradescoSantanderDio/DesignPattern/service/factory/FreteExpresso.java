@@ -14,13 +14,11 @@ public class FreteExpresso implements ServicoFrete {
 
     @Override
     public BigDecimal calcular(String cep) {
-        System.out.println("[FRETE EXPRESSO] Buscando CEP " + cep + " no ViaCEP...");
         EnderecoDTO endereco = viaCepClient.buscarEnderecoPorCep(cep);
 
-        System.out.println("[FRETE EXPRESSO] Entrega para: " + endereco.getLocalidade() + " - " + endereco.getUf());
 
         // Regra de negócio: Entregas expressas para SP custam R$ 30. Para outros estados, R$ 50.
-        if (endereco.getUf().equalsIgnoreCase("SP")) {
+        if (endereco.uf().equalsIgnoreCase("SP")) {
             return new BigDecimal("30.00");
         }
         return new BigDecimal("50.00");

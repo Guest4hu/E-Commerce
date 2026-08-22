@@ -2,7 +2,7 @@ package br.com.bradescoSantanderDio.DesignPattern.controller;
 
 import br.com.bradescoSantanderDio.DesignPattern.dto.PedidoRequestDTO;
 import br.com.bradescoSantanderDio.DesignPattern.dto.PedidoResponseDTO;
-import br.com.bradescoSantanderDio.DesignPattern.service.facade.CheckoutFacade;
+import br.com.bradescoSantanderDio.DesignPattern.service.facade.CheckoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CheckoutController {
 
     @Autowired
-    private CheckoutFacade checkoutFacade;
+    private CheckoutService checkoutFacade;
 
     @PostMapping
     public ResponseEntity<PedidoResponseDTO> finalizarCompra(@RequestBody PedidoRequestDTO request) {

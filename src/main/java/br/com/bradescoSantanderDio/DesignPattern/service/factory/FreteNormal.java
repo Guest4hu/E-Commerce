@@ -15,13 +15,10 @@ public class FreteNormal implements ServicoFrete {
 
     @Override
     public BigDecimal calcular(String cep) {
-        System.out.println("[FRETE NORMAL] Buscando CEP " + cep + " no ViaCEP...");
         EnderecoDTO endereco = viaCepClient.buscarEnderecoPorCep(cep);
 
-        System.out.println("[FRETE NORMAL] Entrega para: " + endereco.getLocalidade() + " - " + endereco.getUf());
-
         // Regra de negócio: Entregas normais para SP custam R$ 10. Para outros estados, R$ 20.
-        if (endereco.getUf().equalsIgnoreCase("SP")) {
+        if (endereco.uf().equalsIgnoreCase("SP")) {
             return new BigDecimal("10.00");
         }
         return new BigDecimal("20.00");

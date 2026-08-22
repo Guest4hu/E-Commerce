@@ -9,7 +9,7 @@ import java.util.Map;
 @Component
 public class FreteFactory {
 
-    // O Spring injeta as calculadoras (FreteNormal e FreteExpresso) automaticamente aqui
+
     @Autowired
     private Map<String, ServicoFrete> servicosFrete;
 
@@ -17,7 +17,7 @@ public class FreteFactory {
         ServicoFrete servico = servicosFrete.get(tipoFrete.name());
 
 
-        if (servico == null) {
+        if (servico == null || (!tipoFrete.equals(TipoFrete.PAC) && !tipoFrete.equals(TipoFrete.SEDEX))) {
             throw new IllegalArgumentException("Tipo de frete não suportado!");
         }
 

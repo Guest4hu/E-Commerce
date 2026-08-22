@@ -8,6 +8,7 @@ import br.com.bradescoSantanderDio.DesignPattern.enums.TipoUsuario;
 import br.com.bradescoSantanderDio.DesignPattern.model.Usuario;
 import br.com.bradescoSantanderDio.DesignPattern.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
 
-    // Gerenciador de login do próprio Spring Security (que exportamos lá na SecurityConfig)
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -32,13 +32,10 @@ public class AuthController {
     @Autowired
     private TokenService tokenService;
 
-    // Encriptador de senha (que exportamos lá na SecurityConfig)
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // ==========================================
-    // 1. ENDPOINT DE LOGIN
-    // ==========================================
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO data) {
 
@@ -56,25 +53,22 @@ public class AuthController {
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
-    // ==========================================
-    // 2. ENDPOINT DE REGISTRO
-    // ==========================================
+
     @PostMapping("/registrar")
-    public ResponseEntity<String> registrar(@RequestBody RegisterRequestDTO data) {
+    public ResponseEntity<LoginResponseDTO> registrar(@RequestBody RegisterRequestDTO data) {
 
         // Verifica se o login (e-mail) já existe no banco de dados
         if (this.repository.findByLogin(data.login()) != null) {
-            return ResponseEntity.badRequest().body("Já existe um usuário com este e-mail.");
+            return ResponseEntity
+                    .status(HttpStatusCode.valueOf(409)).body(new LoginResponseDTO("Login já existe!"));
         }
 
-        // Criptografa a senha antes de salvar no banco!
-        String senhaCriptografada = passwordEncoder.encode(data.senha());
 
-        // Cria um novo usuário com a senha já encriptada e criar por padrão usuario como user
-        Usuario novoUsuario = new Usuario(data.login(), senhaCriptografada, TipoUsuario.USER);
-
-        // Salva no banco de dados H2
-        this.repository.save(novoUsuario);
+        // Cria um novo usuário, com a senha criptografada, e o tipo cliente padrão
+        this.repository.save(
+                new Usuario(data.login(),
+                passwordEncoder.encode(data.senha()),
+                TipoUsuario.USER));
 
         return ResponseEntity.ok().build();
     }
