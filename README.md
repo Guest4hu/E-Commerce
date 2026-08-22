@@ -1,280 +1,283 @@
 
-# DesignPattern - REST API com Java e Spring Boot
+# 📦 Design Pattern - E-commerce com I.A Simples
 
-## Versão 2.0
+## 📌 README 3.0
 
-Na versão **2.0**, o projeto evoluiu com a aplicação de conceitos de **segurança em APIs REST**, incluindo autenticação de usuários, autorização por perfil e utilização de **Token JWT** para proteger endpoints da aplicação.
+Projeto desenvolvido em Java com Spring Boot, aplicando conceitos de **Design Patterns**, **Spring Data JPA** e integração com uma **Inteligência Artificial simples** para auxiliar usuários em um cenário de e-commerce de tecnologia.
 
-Além dos conceitos de **Design Patterns**, esta versão passa a contar com um fluxo de cadastro e login de usuários, onde o usuário autenticado recebe um token JWT que deve ser enviado nas próximas requisições para acessar recursos protegidos.
+Nesta versão, o sistema conta com um assistente virtual capaz de receber comandos em texto e também interpretar comandos de voz para auxiliar no cálculo de fretes.
 
 ---
 
-Este projeto foi desenvolvido como meu primeiro projeto utilizando **Spring Boot**, com foco no estudo e aplicação de **Design Patterns** em uma **API REST**.
+## 🚀 Sobre o Projeto
 
-A aplicação simula um fluxo de checkout de pedidos, aplicando padrões de projeto para organizar responsabilidades, processar pagamentos, calcular fretes, integrar com uma API externa de endereço via CEP e proteger rotas utilizando autenticação com JWT.
+Este projeto simula uma aplicação de e-commerce de tecnologia, onde o usuário pode interagir com um assistente virtual inteligente para obter informações relacionadas a entregas e fretes.
 
-## Objetivo do Projeto
+A aplicação utiliza uma I.A simples integrada ao backend para interpretar mensagens do usuário e acionar ferramentas internas do sistema, como o cálculo de frete.
 
-O objetivo principal deste projeto é praticar conceitos fundamentais do desenvolvimento backend com Java e Spring Boot, incluindo:
+---
 
-- Criação de APIs REST
-- Organização em camadas
-- Uso de DTOs
-- Persistência com Spring Data JPA
-- Banco de dados em memória H2
-- Integração com API externa usando OpenFeign
-- Aplicação prática de Design Patterns
-- Autenticação e autorização com Spring Security
-- Geração e validação de Token JWT
-- Controle de acesso por perfil de usuário
+## 🧠 Novidade da Versão 3.0
 
-## Novidades da Versão 2.0
+A versão 3.0 adiciona uma camada de Inteligência Artificial ao projeto.
 
-A versão **2.0** adiciona uma camada de segurança ao projeto, com os seguintes recursos:
+Agora o sistema possui um assistente virtual que pode:
 
-- Cadastro de usuários
-- Login com autenticação
-- Geração de token JWT após login válido
-- Validação do token recebido no header das requisições
-- Proteção de endpoints com Spring Security
-- Controle de usuários por tipo/perfil
-- Separação entre usuários comuns e administradores
-- Configuração de chave secreta para assinatura dos tokens
+- Receber perguntas em linguagem natural;
+- Interpretar comandos do usuário;
+- Auxiliar no cálculo de fretes;
+- Responder de forma amigável em Português do Brasil;
+- Processar comandos enviados por texto;
+- Processar comandos enviados por áudio.
 
-## Segurança com JWT
+---
 
-O projeto utiliza **JWT - JSON Web Token** para autenticação stateless.
+## 🛠️ Tecnologias Utilizadas
 
-Após realizar login com credenciais válidas, a API retorna um token JWT. Esse token deve ser enviado no header `Authorization` das requisições protegidas, no seguinte formato:
-
-
-text Authorization: Bearer seu-token-jwt
-
-O token é assinado com uma chave secreta configurada na aplicação e possui tempo de expiração, garantindo mais segurança no acesso aos recursos da API.
-
-## Perfis de Usuário
-
-O projeto possui controle de perfil de usuário, permitindo diferenciar permissões dentro da aplicação.
-
-Tipos de usuário utilizados:
-
-- `USER`: usuário comum da aplicação
-- `ADMIN`: usuário administrador
-
-Esse controle permite evoluir o projeto futuramente para proteger rotas específicas de acordo com o perfil do usuário autenticado.
-
-## Design Patterns Utilizados
-
-### Facade
-
-O padrão **Facade** foi utilizado para centralizar e simplificar o fluxo de checkout.
-
-A classe responsável por orquestrar o processo de compra concentra chamadas para cálculo de frete, processamento de pagamento e persistência do pedido.
-
-Esse padrão ajuda a esconder a complexidade interna do sistema e oferece uma interface mais simples para o controller.
-
-### Factory
-
-O padrão **Factory** foi aplicado na escolha do serviço de frete.
-
-Dependendo do tipo de frete informado na requisição, a aplicação seleciona a implementação correta para calcular o valor do frete.
-
-Exemplos de tipos de frete:
-
-- Frete Normal
-- Frete Expresso
-
-### Strategy
-
-O padrão **Strategy** foi utilizado para o processamento de pagamentos.
-
-Cada forma de pagamento possui sua própria estratégia de processamento, permitindo que novas formas de pagamento sejam adicionadas com menor impacto no restante da aplicação.
-
-Exemplos de estratégias:
-
-- Pagamento via Pix
-- Pagamento via Cartão
-
-## Tecnologias Utilizadas
-
-- Java
+- Java 25
 - Spring Boot
-- Spring Web MVC
 - Spring Data JPA
-- Spring Security
-- JWT
-- Spring Cloud OpenFeign
-- H2 Database
+- Jakarta EE
+- Spring AI
+- API de modelo generativo
 - Maven
+- Banco de dados relacional
+- IntelliJ IDEA
 
-## Estrutura do Projeto
+---
 
+## 🧩 Conceitos Aplicados
 
-text src/main/java/br/com/bradescoSantanderDio/DesignPattern ├── auth │ ├── AuthorizationService.java │ ├── SecurityConfig.java │ ├── SecurityFilter.java │ └── TokenService.java ├── client │ └── ViaCepClient.java ├── controller │ ├── AuthController.java │ └── CheckoutController.java ├── dto │ ├── EnderecoDTO.java │ ├── LoginRequestDTO.java │ ├── LoginResponseDTO.java │ ├── PedidoRequestDTO.java │ ├── PedidoResponseDTO.java │ └── RegisterRequestDTO.java ├── enums │ ├── StatusPagamento.java │ ├── TipoFrete.java │ ├── TipoPagamento.java │ └── TipoUsuario.java ├── model │ ├── Pedido.java │ └── Usuario.java ├── repository │ ├── PedidoRepository.java │ └── UsuarioRepository.java ├── service │ ├── facade │ │ └── CheckoutFacade.java │ ├── factory │ │ ├── FreteExpresso.java │ │ ├── FreteFactory.java │ │ ├── FreteNormal.java │ │ └── ServicoFrete.java │ └── strategy │ ├── EstrategiaPagamento.java │ ├── PagamentoCartao.java │ └── PagamentoPix.java └── DesignPatternApplication.java``` 
+O projeto utiliza conceitos importantes de desenvolvimento backend, como:
 
-## Funcionalidades
+- Design Patterns
+- Injeção de Dependência
+- Services
+- Controllers
+- Repositories
+- Entidades JPA
+- Separação de responsabilidades
+- Integração com Inteligência Artificial
+- Uso de ferramentas internas por meio da I.A
 
-- Cadastro de usuários
-- Login de usuários
-- Geração de token JWT
-- Validação de token JWT
-- Proteção de rotas com Spring Security
-- Controle de perfil de usuário
-- Finalização de pedido via API REST
-- Cálculo de frete conforme o tipo selecionado
-- Processamento de pagamento conforme a estratégia escolhida
-- Consulta de endereço por CEP utilizando a API ViaCEP
-- Salvamento do pedido no banco H2
-- Retorno de uma resposta com informações do pedido processado
+---
 
-## Endpoints de Autenticação
+## 🤖 Funcionalidade de I.A
 
-### Registrar Usuário
+A aplicação possui um assistente virtual configurado para atuar como atendente de um e-commerce de tecnologia.
 
-http POST /auth/register
+O assistente foi preparado para:
 
-### Login
+- Ser educado e objetivo;
+- Responder sempre em Português do Brasil;
+- Ajudar clientes com dúvidas sobre frete;
+- Utilizar ferramentas internas para buscar valores reais;
+- Interpretar mensagens simples enviadas pelo usuário;
+- Extrair informações de áudio quando necessário.
 
-http POST /auth/login 
-
-### Exemplo de Requisição de Login
-
-
-json { "login": "usuario@email.com", "senha": "123456" }
-
-### Exemplo de Resposta de Login
+Exemplo de interação por texto:
 
 
-json { "token": "token-jwt-gerado-pela-api" } 
+text Usuário: Quanto fica o frete para o CEP 01001-000?
+Assistente: Claro! Vou verificar o valor do frete para esse CEP.
 
-## Endpoint Principal
-
-### Finalizar Checkout
-
-http POST /api/checkout
-
-Para acessar esse endpoint, envie o token JWT no header da requisição:
+Exemplo de interação por voz:
 
 
-text Authorization: Bearer seu-token-jwt
+text Usuário envia um áudio dizendo: "Quero saber o frete para entregar um notebook no CEP 20040-020."
+Assistente: "Claro! Vou calcular o frete para entrega do notebook no CEP informado."
 
-### Exemplo de Requisição
+---
+
+## 🎙️ Processamento de Áudio
+
+Além das mensagens em texto, a versão 3.0 permite que o usuário envie arquivos de áudio.
+
+O sistema utiliza a I.A para interpretar o conteúdo falado no áudio e identificar se o usuário está solicitando o cálculo de um frete.
+
+Caso o áudio contenha informações suficientes, o assistente pode acionar automaticamente a ferramenta de frete e retornar uma resposta ao cliente.
+
+---
+
+## 📦 Cálculo de Frete com Ferramentas
+
+A I.A não responde com valores inventados.
+
+Ela foi configurada para utilizar ferramentas internas da aplicação sempre que precisar calcular ou consultar valores de frete.
+
+Isso torna as respostas mais confiáveis e alinhadas com as regras reais do sistema.
+
+---
+
+## 🧱 Estrutura Geral do Projeto
+
+A estrutura do projeto pode seguir uma organização semelhante a esta:
 
 
-json { "cep": "01001000", "valorItens": 150.00, "tipoFrete": "NORMAL", "tipoPagamento": "PIX" }```
+text src └── main ├── java │ └── br.com.projeto │ ├── controller │ ├── service │ ├── repository │ ├── model │ ├── dto │ └── ai └── resources ├── application.properties └── application.yml```
 
-### Exemplo de Resposta
+---
 
+## ⚙️ Configuração da I.A
 
-json { "id": 1, "valorFrete": 10.00, "valorTotal": 160.00, "statusPagamento": "APROVADO", "mensagem": "Pedido orquestrado e processado com sucesso!" }``` 
+Para utilizar a integração com a I.A, é necessário configurar as credenciais do provedor utilizado.
 
-> Observação: os valores de enum, como `tipoFrete`, `tipoPagamento` e `tipoUsuario`, devem seguir os nomes definidos no projeto.
-
-## Banco de Dados H2
-
-O projeto utiliza o banco de dados em memória **H2**, ideal para testes e estudos.
-
-Após iniciar a aplicação, o console do H2 pode ser acessado em:
+Exemplo de configuração:
 
 
-text http://localhost:8080/h2-console
-Configurações principais:
+properties spring.ai.model.api-key={AI_API_KEY} spring.ai.model.base-url={AI_BASE_URL}
+
+> Nunca coloque chaves reais diretamente no código-fonte.
+> Utilize variáveis de ambiente ou arquivos de configuração seguros.
+
+Exemplo de variável de ambiente:
 
 
-text JDBC URL: jdbc:h2:mem:checkoutdb User: sa Password:
+bash AI_API_KEY=sua-chave-aqui AI_BASE_URL=https://api.exemplo.com
 
-## Configuração de Segurança
+---
 
-A chave secreta utilizada para assinar os tokens JWT é configurada no arquivo `application.properties`.
+## ▶️ Como Executar o Projeto
+
+### 1. Clone o repositório
+
+
+bash git clone https://github.com/seu-usuario/seu-repositorio.git 
+
+### 2. Acesse a pasta do projeto
+
+
+bash cd seu-repositorio
+
+### 3. Configure as variáveis de ambiente
+
+Configure a chave da I.A e demais informações necessárias para o banco de dados.
 
 Exemplo:
 
 
-properties api.security.token.secret=sua-chave-secreta
+bash AI_API_KEY=sua-chave-aqui DB_URL=jdbc:postgresql://localhost:5432/nome_do_banco DB_USER=seu_usuario DB_PASSWORD=sua_senha 
 
-> Em projetos reais, essa chave não deve ficar exposta no código-fonte. O ideal é utilizar variáveis de ambiente ou serviços próprios para gerenciamento de secrets.
-
-## Como Executar o Projeto
-
-### Pré-requisitos
-
-Antes de começar, é necessário ter instalado:
-
-- Java
-- Maven
-
-### Passos para execução
-
-Clone o repositório:
+### 4. Execute a aplicação
 
 
-bash git clone <url-do-repositorio> 
+bash mvn spring-boot:run
 
-Acesse a pasta do projeto:
+Ou execute diretamente pela sua IDE.
 
+---
 
-bash cd DesignPattern
+## 📡 Possíveis Endpoints
 
-Execute o projeto com Maven:
+A aplicação pode disponibilizar endpoints semelhantes aos exemplos abaixo:
 
-
-bash ./mvnw spring-boot:run
-
-No Windows, também é possível executar:
+### Enviar comando em texto
 
 
-bash mvnw.cmd spring-boot:run
+http POST /assistente/texto Content-Type: application/json
 
-A aplicação ficará disponível em:
-
-text http://localhost:8080
-
-## Integração com ViaCEP
-
-O projeto utiliza o **Spring Cloud OpenFeign** para consumir a API pública do ViaCEP.
-
-Essa integração permite buscar informações de endereço a partir de um CEP informado na requisição.
-
-API utilizada:
+Exemplo de corpo da requisição:
 
 
-text https://viacep.com.br/ws/{cep}/json/
+json { "mensagem": "Quanto fica o frete para o CEP 01001-000?" }
 
-## Aprendizados
+### Enviar comando por áudio
 
-Durante o desenvolvimento deste projeto, foram praticados conceitos importantes como:
 
-- Criação de endpoints REST com Spring Boot
-- Separação de responsabilidades por camadas
-- Uso de interfaces para desacoplamento
-- Implementação prática dos padrões Facade, Factory e Strategy
-- Persistência de dados com JPA
-- Consumo de APIs externas
-- Uso do banco H2 para testes locais
-- Implementação de autenticação com Spring Security
-- Geração e validação de tokens JWT
-- Proteção de endpoints em APIs REST
-- Controle de acesso por tipo de usuário
+http POST /assistente/audio Content-Type: multipart/form-data 
 
-## Possíveis Melhorias Futuras
+Exemplo de campo enviado:
 
-Algumas melhorias que podem ser implementadas futuramente:
 
-- Validação dos dados de entrada com Bean Validation
-- Tratamento global de exceções com `@ControllerAdvice`
-- Documentação da API com Swagger/OpenAPI
-- Testes unitários e de integração
-- Refresh Token
-- Criptografia de senha com BCrypt
-- Persistência em banco de dados externo, como PostgreSQL ou MySQL
-- Dockerização da aplicação
+text arquivo: audio.mp3
 
-## Status do Projeto
+---
 
-Projeto atualizado para a versão **2.0**, com aplicação de conceitos de segurança, autenticação e utilização de token JWT.
+## ✅ Exemplo de Resposta
 
-Desenvolvido para fins de estudo e prática com Java, Spring Boot, REST API, Design Patterns e Spring Security.
 
-## Autor
+json { "resposta": "O frete para o CEP informado fica em R$ 24,90 e o prazo estimado é de 5 dias úteis." }
 
-Desenvolvido por `<seu-nome>` como primeiro projeto com Spring Boot.
+---
+
+## 📚 Aprendizados da Versão 3.0
+
+Nesta versão foram praticados conceitos como:
+
+- Como integrar uma I.A em uma aplicação Spring Boot;
+- Como criar um assistente virtual simples;
+- Como trabalhar com prompts de sistema;
+- Como processar mensagens em linguagem natural;
+- Como enviar arquivos de áudio para interpretação;
+- Como acionar ferramentas internas a partir da I.A;
+- Como manter a responsabilidade de negócio dentro da aplicação.
+
+---
+
+## 🔐 Boas Práticas
+
+Algumas boas práticas adotadas ou recomendadas:
+
+- Não armazenar chaves de API no código;
+- Usar variáveis de ambiente;
+- Separar regras de negócio em services;
+- Manter controllers simples;
+- Validar entradas do usuário;
+- Tratar erros de integração com serviços externos;
+- Evitar que a I.A gere valores críticos sem consultar ferramentas internas;
+- Registrar logs úteis para depuração.
+
+---
+
+## 🧪 Melhorias Futuras
+
+Algumas ideias para próximas versões:
+
+- Criar histórico de conversas;
+- Adicionar autenticação de usuários;
+- Integrar cálculo real de frete com transportadoras;
+- Salvar solicitações de frete no banco de dados;
+- Criar interface web para conversar com o assistente;
+- Melhorar tratamento de erros em áudio;
+- Adicionar suporte a mais formatos de mídia;
+- Criar testes automatizados para os serviços de I.A;
+- Adicionar monitoramento das chamadas feitas ao modelo de I.A.
+
+---
+
+## 🏷️ Versões
+
+### Versão 1.0
+
+- Estrutura inicial do projeto;
+- Aplicação de Design Patterns;
+- Criação das entidades e serviços principais.
+
+### Versão 2.0
+
+- Integração com banco de dados;
+- Uso de Spring Data JPA;
+- Melhor separação das camadas da aplicação.
+
+### Versão 3.0
+
+- Integração com I.A simples;
+- Assistente virtual para e-commerce;
+- Processamento de mensagens em texto;
+- Processamento de comandos por voz;
+- Uso de ferramentas internas para cálculo de frete.
+
+---
+
+## 👨‍💻 Autor
+
+Projeto desenvolvido para fins de estudo, prática de arquitetura backend, Design Patterns e integração com Inteligência Artificial em aplicações Java.
+
+---
+
+## 📄 Licença
+
+Este projeto é de uso educacional.
+
+Sinta-se livre para estudar, modificar e evoluir a aplicação.
+```
